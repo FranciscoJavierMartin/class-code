@@ -10,7 +10,8 @@
     "postinstall": "nuxt prepare",
     "format": "prettier --write app/",
     "lint": "eslint --fix app/",
-    "lint-format": "bun lint && bun format"
+    "lint-format": "bun lint && bun format",
+    "prepare": "husky"
   },
   "dependencies": {
     "@nuxt/eslint": "1.12.1",
