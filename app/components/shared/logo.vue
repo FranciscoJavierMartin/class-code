@@ -1,8 +1,6 @@
 <template>
   <div>
-    <span :class="cn('max-w-50', $props.class)">
-      CodeClass &copy; {{ new Date().getFullYear() }}
-    </span>
+    <span :class="cn('max-w-50', $props.class)"> CodeClass </span>
   </div>
 </template>
 
