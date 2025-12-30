@@ -135,6 +135,8 @@
         </NuxtLink>
       </div>
     </section>
+
+    <HomeSupport />
   </div>
 </template>
 
