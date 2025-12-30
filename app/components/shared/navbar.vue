@@ -13,7 +13,7 @@
         {{ link.title }}
       </NuxtLink>
     </nav>
-    <SharedMobileNavbar />
+
     <nav class="flex items-center gap-3">
       <div class="hidden items-center gap-3 lg:flex">
         <NuxtLink
@@ -62,6 +62,8 @@
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <SharedMobileNavbar />
     </nav>
   </div>
 </template>

@@ -1,7 +1,9 @@
 <template>
   <Drawer direction="top">
     <DrawerTrigger as-child>
-      <Button variant="outline"> Open Drawer </Button>
+      <button class="flex items-center space-x-2 lg:hidden">
+        <Menu />
+      </button>
     </DrawerTrigger>
     <DrawerContent aria-describedby="Navigation">
       <div
@@ -11,7 +13,7 @@
           <NuxtLink
             v-for="link in navLinks"
             :key="link.toName"
-            class="w-full rounded-md border-b px-2 py-5 text-center text-sm font-black hover:underline"
+            class="w-full rounded-md border-b px-2 py-5 text-center text-sm hover:underline"
           >
             {{ link.title }}
           </NuxtLink>
@@ -22,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import { Menu } from 'lucide-vue-next';
 import { ROUTES } from '@/utils/constants/routes';
 
 const navLinks = [
