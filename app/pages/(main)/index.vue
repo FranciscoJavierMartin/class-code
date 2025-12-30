@@ -42,6 +42,8 @@
       </div>
     </header>
 
+    <HomeElement />
+
     <section class="container space-y-6 py-8 md:py-12 lg:py-24">
       <div class="flex items-center justify-between">
         <HomeSectionTitle>Categories</HomeSectionTitle>
