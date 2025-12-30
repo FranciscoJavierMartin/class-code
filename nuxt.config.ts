@@ -32,35 +32,7 @@ export default defineNuxtConfig({
     classSuffix: '',
   },
 
-  fonts: {
-    families: [
-      {
-        name: 'Poppins',
-        provider: 'local',
-        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-        src: [
-          '@/assets/fonts/Poppins/Poppins-Black.ttf',
-          '@/assets/fonts/Poppins/Poppins-BlackItalic.ttf',
-          '@/assets/fonts/Poppins/Poppins-Bold.ttf',
-          '@/assets/fonts/Poppins/Poppins-BoldItalic.ttf',
-          '@/assets/fonts/Poppins/Poppins-ExtraBold.ttf',
-          '@/assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf',
-          '@/assets/fonts/Poppins/Poppins-ExtraLight.ttf',
-          '@/assets/fonts/Poppins/Poppins-ExtraLightItalic.ttf',
-          '@/assets/fonts/Poppins/Poppins-Italic.ttf',
-          '@/assets/fonts/Poppins/Poppins-Light.ttf',
-          '@/assets/fonts/Poppins/Poppins-LightItalic.ttf',
-          '@/assets/fonts/Poppins/Poppins-Medium.ttf',
-          '@/assets/fonts/Poppins/Poppins-MediumItalic.ttf',
-          '@/assets/fonts/Poppins/Poppins-Regular.ttf',
-          '@/assets/fonts/Poppins/Poppins-SemiBold.ttf',
-          '@/assets/fonts/Poppins/Poppins-SemiBoldItalic.ttf',
-          '@/assets/fonts/Poppins/Poppins-Thin.ttf',
-          '@/assets/fonts/Poppins/Poppins-ThinItalic.ttf',
-        ],
-      },
-    ],
-  },
+  fonts: {},
 
   nitro: {
     preset: 'bun',

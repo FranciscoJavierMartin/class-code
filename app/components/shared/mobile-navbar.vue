@@ -13,7 +13,7 @@
           <NuxtLink
             v-for="link in navLinks"
             :key="link.toName"
-            class="w-full rounded-md border-b px-2 py-5 text-center text-sm hover:underline"
+            class="w-full rounded-md border-b px-2 py-5 text-center text-sm font-extrabold hover:underline"
           >
             {{ link.title }}
           </NuxtLink>
