@@ -41,10 +41,95 @@
         </div>
       </div>
     </header>
+
+    <section class="container space-y-6 py-8 md:py-12 lg:py-24">
+      <div class="flex items-center justify-between">
+        <HomeSectionTitle>Categories</HomeSectionTitle>
+        <NuxtLink
+          class="flex items-center gap-1 text-sm font-medium hover:opacity-80"
+        >
+          Browse all <ArrowRightIcon class="size-4" />
+        </NuxtLink>
+      </div>
+      <div
+        class="mx-auto grid grid-cols-2 justify-center gap-4 md:grid-cols-3 2xl:grid-cols-4"
+      >
+        <NuxtLink
+          v-for="category in categories"
+          :key="category.id"
+          class="bg-background relative overflow-hidden rounded-lg border p-2 transition-all duration-500 ease-in-out hover:scale-105"
+        >
+          <div
+            class="flex flex-col items-center justify-between gap-4 rounded-md p-6"
+          >
+            <img
+              :src="category.thumbnail"
+              :alt="category.title"
+              width="100px"
+              height="100px"
+            />
+            <h3 class="font-bold">{{ category.title }}</h3>
+          </div>
+        </NuxtLink>
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ArrowRightIcon } from 'lucide-vue-next';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
+import designCategoryImage from '@/assets/images/categories/design.jpg';
+import developmentCategoryImage from '@/assets/images/categories/development.jpg';
+import itCategoryImage from '@/assets/images/categories/it_software.jpg';
+import marketingCategoryImage from '@/assets/images/categories/marketing.jpg';
+import musicCategoryImage from '@/assets/images/categories/music.jpg';
+import personalDevelopmentCategoryImage from '@/assets/images/categories/personal_development.jpg';
+import photographyCategoryImage from '@/assets/images/categories/photography.jpg';
+import programmingCategoryImage from '@/assets/images/categories/programming.jpg';
+
+const categories = [
+  {
+    id: 1,
+    title: 'Design',
+    thumbnail: designCategoryImage,
+  },
+
+  {
+    id: 3,
+    title: 'Development',
+    thumbnail: developmentCategoryImage,
+  },
+  {
+    id: 4,
+    title: 'Marketing',
+    thumbnail: marketingCategoryImage,
+  },
+  {
+    id: 5,
+    title: 'IT & Software',
+    thumbnail: itCategoryImage,
+  },
+  {
+    id: 6,
+    title: 'Personal Development',
+    thumbnail: personalDevelopmentCategoryImage,
+  },
+  {
+    id: 7,
+    title: 'Business',
+    thumbnail: programmingCategoryImage,
+  },
+  {
+    id: 8,
+    title: 'Photography',
+    thumbnail: photographyCategoryImage,
+  },
+  {
+    id: 9,
+    title: 'Music',
+    thumbnail: musicCategoryImage,
+  },
+];
 </script>
