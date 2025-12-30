@@ -9,7 +9,6 @@
       />
       <span class="sr-only">Toggle theme</span>
     </Button>
-    <h1 class="text-red-500 dark:text-blue-500">Test</h1>
   </div>
 </template>
 
