@@ -4,12 +4,14 @@
       <Button variant="outline"> Open Drawer </Button>
     </DrawerTrigger>
     <DrawerContent aria-describedby="Navigation">
-      <div class="bg-popover text-popover-foreground mx-auto w-full max-w-sm">
+      <div
+        class="bg-popover text-popover-foreground mx-auto my-10 w-full max-w-sm"
+      >
         <nav class="grid w-full grid-flow-row auto-rows-auto text-sm">
           <NuxtLink
             v-for="link in navLinks"
             :key="link.toName"
-            class="w-full rounded-md px-2 py-5 text-center text-sm font-medium hover:underline"
+            class="w-full rounded-md border-b px-2 py-5 text-center text-sm font-black hover:underline"
           >
             {{ link.title }}
           </NuxtLink>
