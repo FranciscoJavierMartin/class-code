@@ -99,6 +99,7 @@ model Course {
   testimonials Testimonial[]
   modules      Module[]
   enrollments  Enrollment[]
+  learning     String[]
 
   category     Category @relation(fields: [categoryId], references: [id])
   categoryId   String
