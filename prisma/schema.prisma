@@ -27,9 +27,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  sessions Session[]
-  accounts Account[]
-  watches  Watch[]
+  sessions     Session[]
+  accounts     Account[]
+  watches      Watch[]
+  testimonials Testimonial[]
 
   @@map("User")
 }
@@ -92,6 +93,9 @@ model Course {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  testimonials Testimonial[]
+  modules      Module[]
 }
 
 model Category {
@@ -108,6 +112,11 @@ model Testimonial {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String
 }
 
 model Module {
@@ -119,6 +128,10 @@ model Module {
   order       Int
 
   watches Watch[]
+
+  course   Course   @relation(fields: [courseId], references: [id])
+  courseId String
+  lessons  Lesson[]
 }
 
 model Enrollment {
@@ -139,13 +152,30 @@ model Lesson {
   order       Int
 
   watches Watch[]
+
+  module   Module @relation(fields: [moduleId], references: [id])
+  moduleId String
 }
 
-model QuizzSet {
+model Quiz {
   id          String  @id @default(cuid())
   description String
   slug        String
   active      Boolean @default(false)
+
+  questions Question[]
+}
+
+model Question {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  slug        String
+  explanation String
+  mark        Int    @default(5)
+
+  quiz   Quiz   @relation(fields: [quizId], references: [id])
+  quizId String
 }
 
 model Watch {
@@ -163,13 +193,4 @@ model Watch {
   moduleId String
 
   @@id([userId, lessonId, moduleId])
-}
-
-model Quizz {
-  id          String @id @default(cuid())
-  title       String
-  description String
-  slug        String
-  explanation String
-  mark        Int    @default(5)
 }
