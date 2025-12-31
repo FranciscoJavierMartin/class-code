@@ -26,4 +26,8 @@ export const auth = betterAuth({
   verification: {
     modelName: 'Verification',
   },
+  advanced: {
+    // TODO: Remove this before production. Only for testing purposes (Bruno)
+    disableOriginCheck: import.meta.dev,
+  },
 });
