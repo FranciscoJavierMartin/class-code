@@ -107,3 +107,11 @@ model Testimonial {
   content String
   rating  Decimal
 }
+
+model Module {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  status      String
+  slug        String
+}
