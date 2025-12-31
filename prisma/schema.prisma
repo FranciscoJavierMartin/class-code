@@ -101,3 +101,9 @@ model Category {
   description String?
   thumbnail   String
 }
+
+model Testimonial {
+  id      String  @id @default(cuid())
+  content String
+  rating  Decimal
+}
