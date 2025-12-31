@@ -106,6 +106,9 @@ model Testimonial {
   id      String  @id @default(cuid())
   content String
   rating  Decimal
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Module {
@@ -114,4 +117,47 @@ model Module {
   description String
   status      String
   slug        String
+  order       Int
+}
+
+model Enrollment {
+  status         String
+  createdAt      DateTime @default(now())
+  completionDate DateTime
+  method         String
+}
+
+model Lesson {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  duration    Decimal @default(0)
+  videoUrl    String
+  active      Boolean @default(false)
+  slug        String
+  order       Int
+}
+
+model QuizzSet {
+  id          String  @id @default(cuid())
+  description String
+  slug        String
+  active      Boolean @default(false)
+}
+
+model Watch {
+  state    String
+  lastTime Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Quizz {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  slug        String
+  explanation String
+  mark        Int    @default(5)
 }
