@@ -79,7 +79,7 @@ async function seedDatabase(): Promise<void> {
     },
   });
 
-  /*const courses = await prisma.course.createManyAndReturn({
+  const courses = await prisma.course.createManyAndReturn({
     data: [
       {
         title: 'Learn Python',
@@ -97,6 +97,7 @@ async function seedDatabase(): Promise<void> {
           'Learn to make projects that are production ready',
           'Get a bonus chapter on using Python for Machine Learning',
         ],
+        instructorId: johnDoe.user.id,
       },
       {
         title: 'Mastering JavaScript',
@@ -114,9 +115,33 @@ async function seedDatabase(): Promise<void> {
           'Learn to make projects that are production ready',
           'Get a bonus chapter on using JavaScript for Full Stack Develeopment',
         ],
+        instructorId: johnDoe.user.id,
       },
     ],
-  });*/
+  });
+
+  await prisma.enrollment.createMany({
+    data: [
+      {
+        status: 'completed',
+        method: 'paypal',
+        courseId: courses[0].id,
+        studentId: bobSmith.user.id,
+      },
+      {
+        status: 'completed',
+        method: 'stripe',
+        courseId: courses[1].id,
+        studentId: carolSanders.user.id,
+      },
+      {
+        status: 'completed',
+        method: 'stripe',
+        courseId: courses[1].id,
+        studentId: aliceCooper.user.id,
+      },
+    ],
+  });
 }
 
 try {

@@ -151,7 +151,7 @@ model Module {
 model Enrollment {
   status         String
   createdAt      DateTime @default(now())
-  completionDate DateTime
+  completionDate DateTime?
   method         String
 
   course    Course @relation(fields: [courseId], references: [id])
