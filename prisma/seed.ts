@@ -261,13 +261,43 @@ async function createLessons(modules: Module[]): Promise<Lesson[]> {
   });
 }
 
+async function createTestimonials(
+  courses: Course[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { aliceCooper, bobSmith, carolSanders }: any,
+) {
+  await prisma.testimonial.createMany({
+    data: [
+      {
+        content: 'Great course! I learned a lot.',
+        rating: 5,
+        studentId: aliceCooper.user.id,
+        courseId: courses[0].id,
+      },
+      {
+        content: 'What a JavaScript Course, Awesome!!!',
+        rating: 5,
+        studentId: bobSmith.user.id,
+        courseId: courses[1].id,
+      },
+      {
+        content: 'One of the best JS Course!!!',
+        rating: 4,
+        studentId: carolSanders.user.id,
+        courseId: courses[1].id,
+      },
+    ],
+  });
+}
+
 async function seedDatabase(): Promise<void> {
   const categories = await createCategories();
   const { johnDoe, aliceCooper, bobSmith, carolSanders } = await createUsers();
   const courses = await createCourses({ categories, johnDoe });
   await createEnrollments({ courses, bobSmith, aliceCooper, carolSanders });
   const modules = await createModules(courses);
-  const lessons = await createLessons(modules);
+  await createLessons(modules);
+  await createTestimonials(courses, { aliceCooper, bobSmith, carolSanders });
 }
 
 try {
