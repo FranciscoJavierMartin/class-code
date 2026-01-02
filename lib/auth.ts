@@ -17,6 +17,25 @@ export const auth = betterAuth({
   plugins: [openAPI()],
   user: {
     modelName: 'User',
+    additionalFields: {
+      firstName: {
+        type: 'string',
+      },
+      lastName: {
+        type: 'string',
+      },
+      bio: {
+        type: 'string',
+        required: false,
+      },
+      designation: {
+        type: 'string',
+        required: false,
+      },
+      role: {
+        type: 'string',
+      },
+    },
   },
   session: {
     modelName: 'Session',
