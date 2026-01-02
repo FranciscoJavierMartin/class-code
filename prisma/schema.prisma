@@ -23,6 +23,7 @@ model User {
   lastName      String
   bio           String?
   designation   String?
+  role          Role    @default(STUDENT)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -213,4 +214,9 @@ model Watch {
   moduleId String
 
   @@id([userId, lessonId, moduleId])
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
 }
