@@ -1,6 +1,6 @@
 import { prisma } from '~~/lib/prisma';
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   const courses = await prisma.course.findMany({
     include: {
       modules: true,
