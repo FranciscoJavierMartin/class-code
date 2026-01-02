@@ -150,7 +150,7 @@ model Module {
 
 model Enrollment {
   status         String
-  createdAt      DateTime @default(now())
+  createdAt      DateTime  @default(now())
   completionDate DateTime?
   method         String
 
@@ -166,7 +166,7 @@ model Lesson {
   id          String  @id @default(cuid())
   title       String
   description String
-  duration    Decimal @default(0)
+  duration    Int     @default(0)
   videoUrl    String
   active      Boolean @default(false)
   slug        String

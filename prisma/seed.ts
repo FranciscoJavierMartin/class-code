@@ -1,22 +1,35 @@
 import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient, Role } from '../app/generated/prisma/client';
+import type {
+  Category,
+  Course,
+  Lesson,
+  Module,
+} from '../app/generated/prisma/client';
 import { auth } from '../lib/auth';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
 async function removeData(): Promise<void> {
+  await prisma.testimonial.deleteMany();
+  await prisma.question.deleteMany();
+  await prisma.quiz.deleteMany();
+  await prisma.watch.deleteMany();
+  await prisma.enrollment.deleteMany();
+  await prisma.lesson.deleteMany();
+  await prisma.module.deleteMany();
+  await prisma.course.deleteMany();
   await prisma.category.deleteMany();
   await prisma.session.deleteMany();
   await prisma.verification.deleteMany();
   await prisma.account.deleteMany();
   await prisma.user.deleteMany();
-  await prisma.course.deleteMany();
 }
 
-async function seedDatabase(): Promise<void> {
-  const categories = await prisma.category.createManyAndReturn({
+async function createCategories(): Promise<Category[]> {
+  return prisma.category.createManyAndReturn({
     data: [
       {
         title: 'Development',
@@ -26,7 +39,10 @@ async function seedDatabase(): Promise<void> {
       },
     ],
   });
+}
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function createUsers(): Promise<any> {
   const johnDoe = await auth.api.signUpEmail({
     body: {
       email: 'john@doe.com',
@@ -79,7 +95,17 @@ async function seedDatabase(): Promise<void> {
     },
   });
 
-  const courses = await prisma.course.createManyAndReturn({
+  return {
+    johnDoe,
+    aliceCooper,
+    bobSmith,
+    carolSanders,
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function createCourses({ categories, johnDoe }: any): Promise<Course[]> {
+  return prisma.course.createManyAndReturn({
     data: [
       {
         title: 'Learn Python',
@@ -119,7 +145,15 @@ async function seedDatabase(): Promise<void> {
       },
     ],
   });
+}
 
+async function createEnrollments({
+  courses,
+  bobSmith,
+  carolSanders,
+  aliceCooper,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}: any): Promise<void> {
   await prisma.enrollment.createMany({
     data: [
       {
@@ -142,6 +176,98 @@ async function seedDatabase(): Promise<void> {
       },
     ],
   });
+}
+
+async function createModules(courses: Course[]) {
+  return prisma.module.createManyAndReturn({
+    data: [
+      {
+        title: 'Python Basics',
+        description: 'Learn the fundamentals of Python programming language.',
+        status: 'active',
+        slug: 'python-basics',
+        order: 0,
+        courseId: courses[0].id,
+      },
+      {
+        title: 'HTML5 and CSS3 Essentials',
+        description: 'Master HTML5 and CSS3 for modern web development.',
+        status: 'active',
+        slug: 'html5-css3-essentials',
+        order: 0,
+        courseId: courses[1].id,
+      },
+    ],
+  });
+}
+
+async function createLessons(modules: Module[]): Promise<Lesson[]> {
+  return prisma.lesson.createManyAndReturn({
+    data: [
+      {
+        title: 'Introduction to Variables',
+        description: 'Learn the basics of variables in programming.',
+        duration: 630,
+        videoUrl:
+          'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        slug: 'introduction-to-variables',
+        order: 0,
+        moduleId: modules[0].id,
+      },
+      {
+        title: 'HTML Basics',
+        description: 'Understand the fundamentals of HTML.',
+        duration: 456,
+        videoUrl:
+          'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        slug: 'html-basics',
+        order: 0,
+        moduleId: modules[0].id,
+      },
+      {
+        title: 'Introduction to Machine Learning',
+        description:
+          'Get introduced to the exciting field of machine learning.',
+        duration: 1200,
+        videoUrl:
+          'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        slug: 'introduction-to-machine-learning',
+        moduleId: modules[0].id,
+        order: 0,
+      },
+      {
+        title: 'Composition Techniques in Photography',
+        description:
+          'Master various composition techniques for stunning photographs.',
+        duration: 200,
+        videoUrl:
+          'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        slug: 'composition-techniques-in-photography',
+        moduleId: modules[1].id,
+        order: 0,
+      },
+      {
+        title: 'Budgeting Strategies',
+        description:
+          'Learn effective budgeting strategies for personal finance.',
+        duration: 537,
+        videoUrl:
+          'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        slug: 'budgeting-strategies',
+        moduleId: modules[1].id,
+        order: 0,
+      },
+    ],
+  });
+}
+
+async function seedDatabase(): Promise<void> {
+  const categories = await createCategories();
+  const { johnDoe, aliceCooper, bobSmith, carolSanders } = await createUsers();
+  const courses = await createCourses({ categories, johnDoe });
+  await createEnrollments({ courses, bobSmith, aliceCooper, carolSanders });
+  const modules = await createModules(courses);
+  const lessons = await createLessons(modules);
 }
 
 try {
