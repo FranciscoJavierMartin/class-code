@@ -1,12 +1,17 @@
 import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from '../app/generated/prisma/client';
+import { PrismaClient, Role } from '../app/generated/prisma/client';
+import { auth } from '../lib/auth';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
 async function removeData(): Promise<void> {
   await prisma.category.deleteMany();
+  await prisma.session.deleteMany();
+  await prisma.verification.deleteMany();
+  await prisma.account.deleteMany();
+  await prisma.user.deleteMany();
   await prisma.course.deleteMany();
 }
 
@@ -20,6 +25,58 @@ async function seedDatabase(): Promise<void> {
           'https://res.cloudinary.com/dyshqk0em/image/upload/v1767207870/code-class/categories/development.jpg',
       },
     ],
+  });
+
+  const johnDoe = await auth.api.signUpEmail({
+    body: {
+      email: 'john@doe.com',
+      password: 'Password1.',
+      firstName: 'John',
+      lastName: 'Doe',
+      name: 'John Doe',
+      designation: 'Senior Software Engineer, Dell Inc.',
+      bio: 'Experienced educator passionate about fostering student learning and development.',
+      role: Role.INSTRUCTOR,
+    },
+  });
+
+  const aliceCooper = await auth.api.signUpEmail({
+    body: {
+      email: 'alice@cooper.com',
+      password: 'Password1.',
+      firstName: 'Alice',
+      lastName: 'Cooper',
+      name: 'Alice Cooper',
+      designation: 'Junior Develeoper, Microsoft',
+      bio: 'I love coding',
+      role: Role.STUDENT,
+    },
+  });
+
+  const bobSmith = await auth.api.signUpEmail({
+    body: {
+      email: 'bob@smith.com',
+      password: 'Password1.',
+      firstName: 'Bob',
+      lastName: 'Smith',
+      name: 'Bob Smith',
+      designation: 'Junior Develeoper, Acme',
+      bio: 'Passionate about finance and investing.',
+      role: Role.STUDENT,
+    },
+  });
+
+  const carolSanders = await auth.api.signUpEmail({
+    body: {
+      email: 'carol@sanders.com',
+      password: 'Password1.',
+      firstName: 'Carol',
+      lastName: 'Sanders',
+      name: 'Carol Sanders',
+      designation: 'Junior Develeoper, OpenText',
+      bio: 'I love programming, I eat JavaScript',
+      role: Role.STUDENT,
+    },
   });
 
   /*const courses = await prisma.course.createManyAndReturn({
