@@ -1,5 +1,6 @@
 <template>
   <NuxtLink
+    :to="{ name: ROUTES.category, params: { id } }"
     class="bg-background relative overflow-hidden rounded-lg border p-2 transition-all duration-500 ease-in-out hover:scale-105"
   >
     <div
@@ -12,5 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import { ROUTES } from '~/utils/constants/routes';
+
 defineProps<{ title: string; id: string; thumbnail: string }>();
 </script>

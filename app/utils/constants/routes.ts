@@ -1,5 +1,6 @@
 export const ROUTES = {
   home: 'index',
+  category: 'categories-id',
   course: 'courses-id',
   courses: 'courses',
   features: 'features',
