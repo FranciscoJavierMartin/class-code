@@ -56,23 +56,11 @@
       <div
         class="mx-auto grid grid-cols-2 justify-center gap-4 md:grid-cols-3 2xl:grid-cols-4"
       >
-        <NuxtLink
-          v-for="category in categories"
+        <CardCategory
+          v-for="category in data?.categories"
           :key="category.id"
-          class="bg-background relative overflow-hidden rounded-lg border p-2 transition-all duration-500 ease-in-out hover:scale-105"
-        >
-          <div
-            class="flex flex-col items-center justify-between gap-4 rounded-md p-6"
-          >
-            <img
-              :src="category.thumbnail"
-              :alt="category.title"
-              width="100px"
-              height="100px"
-            />
-            <h3 class="font-bold">{{ category.title }}</h3>
-          </div>
-        </NuxtLink>
+          v-bind="category"
+        />
       </div>
     </section>
 
@@ -108,69 +96,32 @@ import { ArrowRightIcon } from 'lucide-vue-next';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 import { ROUTES } from '@/utils/constants/routes';
-import designCategoryImage from '@/assets/images/categories/design.jpg';
-import developmentCategoryImage from '@/assets/images/categories/development.jpg';
-import itCategoryImage from '@/assets/images/categories/it_software.jpg';
-import marketingCategoryImage from '@/assets/images/categories/marketing.jpg';
-import musicCategoryImage from '@/assets/images/categories/music.jpg';
-import personalDevelopmentCategoryImage from '@/assets/images/categories/personal_development.jpg';
-import photographyCategoryImage from '@/assets/images/categories/photography.jpg';
-import programmingCategoryImage from '@/assets/images/categories/programming.jpg';
-import type { Course } from '~/generated/prisma/client';
-
-const categories = [
-  {
-    id: 1,
-    title: 'Design',
-    thumbnail: designCategoryImage,
-  },
-  {
-    id: 2,
-    title: 'Development',
-    thumbnail: developmentCategoryImage,
-  },
-  {
-    id: 3,
-    title: 'Marketing',
-    thumbnail: marketingCategoryImage,
-  },
-  {
-    id: 4,
-    title: 'IT & Software',
-    thumbnail: itCategoryImage,
-  },
-  {
-    id: 5,
-    title: 'Personal Development',
-    thumbnail: personalDevelopmentCategoryImage,
-  },
-  {
-    id: 6,
-    title: 'Business',
-    thumbnail: programmingCategoryImage,
-  },
-  {
-    id: 7,
-    title: 'Photography',
-    thumbnail: photographyCategoryImage,
-  },
-  {
-    id: 8,
-    title: 'Music',
-    thumbnail: musicCategoryImage,
-  },
-];
+import type { Category, Course } from '~/generated/prisma/client';
 
 const { data } = await useAsyncData<{
   courses: Course[];
+  categories: Category[];
 }>(
   'questions',
-  (_nuxtApp, { signal }) =>
-    $fetch<{
-      courses: Course[];
-    }>('/api/courses', {
-      signal,
-    }),
+  async (_nuxtApp, { signal }) => {
+    const [{ courses }, { categories }] = await Promise.all([
+      $fetch<{
+        courses: Course[];
+      }>('/api/courses', {
+        signal,
+      }),
+      $fetch<{
+        categories: Category[];
+      }>('/api/categories', {
+        signal,
+      }),
+    ]);
+
+    return {
+      categories,
+      courses,
+    };
+  },
   {},
 );
 </script>
