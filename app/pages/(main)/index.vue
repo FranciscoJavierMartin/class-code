@@ -80,6 +80,7 @@
       <div class="flex items-center justify-between">
         <HomeSectionTitle>Courses</HomeSectionTitle>
         <NuxtLink
+          :to="{ name: ROUTES.courses }"
           class="flex items-center gap-1 text-sm font-medium hover:opacity-80"
         >
           Browse all <ArrowRightIcon class="size-4" />
@@ -88,51 +89,13 @@
       <div
         class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
-        <NuxtLink
-          v-for="course in courses"
+        <CardCourse
+          v-for="course in data?.courses"
           :key="course.id"
-          :to="{ name: ROUTES.course, params: { id: course.id } }"
-        >
-          <div
-            class="group h-full overflow-hidden rounded-lg border p-3 transition hover:shadow-sm"
-          >
-            <div
-              class="relative aspect-video w-full overflow-hidden rounded-md"
-            >
-              <img
-                :src="course1"
-                alt="course image"
-                fill
-                class="object-cover"
-              />
-            </div>
-            <div class="flex flex-col pt-2">
-              <div
-                class="line-clamp-2 text-lg font-medium group-hover:text-sky-700 md:text-base"
-              >
-                Reactive accelerator
-              </div>
-              <p class="text-muted-foreground text-xs">Development</p>
-              <div class="my-3 flex items-center gap-x-2 text-sm md:text-xs">
-                <div class="flex items-center gap-x-1 text-slate-500">
-                  <div>
-                    <BookOpen class="w-4" />
-                  </div>
-                  <span>4 chapters</span>
-                </div>
-              </div>
-              <!-- Course progress -->
-              <div class="mt-4 flex items-center justify-between">
-                <p class="text-md font-medium text-slate-700 md:text-sm">
-                  {{ formatPrice(49) }}
-                </p>
-              </div>
-              <Button variant="ghost" class="h-7 gap-1 text-xs text-sky-700">
-                Enroll <ArrowRight class="w-3" />
-              </Button>
-            </div>
-          </div>
-        </NuxtLink>
+          :course="course"
+          :category="course.category"
+          :modules="course.modules"
+        />
       </div>
     </section>
 
@@ -141,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowRight, ArrowRightIcon, BookOpen } from 'lucide-vue-next';
+import { ArrowRightIcon } from 'lucide-vue-next';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 import { ROUTES } from '@/utils/constants/routes';
@@ -153,7 +116,7 @@ import musicCategoryImage from '@/assets/images/categories/music.jpg';
 import personalDevelopmentCategoryImage from '@/assets/images/categories/personal_development.jpg';
 import photographyCategoryImage from '@/assets/images/categories/photography.jpg';
 import programmingCategoryImage from '@/assets/images/categories/programming.jpg';
-import course1 from '@/assets/images/courses/course_1.png';
+import type { Course } from '~/generated/prisma/client';
 
 const categories = [
   {
@@ -198,46 +161,16 @@ const categories = [
   },
 ];
 
-const courses = [
-  {
-    id: 1,
-    title: 'Design',
-    thumbnail: designCategoryImage,
-  },
-  {
-    id: 2,
-    title: 'Development',
-    thumbnail: developmentCategoryImage,
-  },
-  {
-    id: 3,
-    title: 'Marketing',
-    thumbnail: marketingCategoryImage,
-  },
-  {
-    id: 4,
-    title: 'IT & Software',
-    thumbnail: itCategoryImage,
-  },
-  {
-    id: 5,
-    title: 'Personal Development',
-    thumbnail: personalDevelopmentCategoryImage,
-  },
-  {
-    id: 6,
-    title: 'Business',
-    thumbnail: programmingCategoryImage,
-  },
-  {
-    id: 7,
-    title: 'Photography',
-    thumbnail: photographyCategoryImage,
-  },
-  {
-    id: 8,
-    title: 'Music',
-    thumbnail: musicCategoryImage,
-  },
-];
+const { data } = await useAsyncData<{
+  courses: Course[];
+}>(
+  'questions',
+  (_nuxtApp, { signal }) =>
+    $fetch<{
+      courses: Course[];
+    }>('/api/courses', {
+      signal,
+    }),
+  {},
+);
 </script>
