@@ -35,58 +35,10 @@
             <SheetContent side="left">
               <SheetHeader>
                 <SheetTitle>Filter courses</SheetTitle>
-                <Accordion :default-value="['categories']" type="multiple">
-                  <AccordionItem value="categories">
-                    <AccordionTrigger
-                      class="py-3 text-sm text-gray-400 hover:text-gray-500"
-                    >
-                      <span class="font-medium text-gray-900">
-                        Categories
-                      </span>
-                    </AccordionTrigger>
-                    <AccordionContent class="pt-6">
-                      <ul class="space-y-4">
-                        <li
-                          v-for="option in data?.categories"
-                          :key="option.id"
-                          class="flex items-center"
-                        >
-                          <Checkbox :id="option.id" />
-                          <Label
-                            :for="option.id"
-                            class="ml-3 cursor-pointer text-sm text-gray-600"
-                          >
-                            {{ option.title }}
-                          </Label>
-                        </li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="price">
-                    <AccordionTrigger
-                      class="py-3 text-sm text-gray-400 hover:text-gray-500"
-                    >
-                      <span class="font-medium text-gray-900"> Price </span>
-                    </AccordionTrigger>
-                    <AccordionContent class="pt-6">
-                      <ul class="space-y-4">
-                        <li
-                          v-for="option in PRICE_OPTIONS"
-                          :key="option.value"
-                          class="flex items-center"
-                        >
-                          <Checkbox :id="option.value" />
-                          <Label
-                            :for="option.value"
-                            class="ml-3 cursor-pointer text-sm text-gray-600"
-                          >
-                            {{ option.label }}
-                          </Label>
-                        </li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                <CourseFilters
+                  v-model="filters"
+                  :list="[categoryOptions, PRICE_OPTIONS]"
+                />
               </SheetHeader>
             </SheetContent>
           </Sheet>
@@ -99,56 +51,10 @@
     <section class="pt-6 pb-24">
       <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
         <div class="hidden lg:block">
-          <Accordion :default-value="['categories']" type="multiple">
-            <AccordionItem value="categories">
-              <AccordionTrigger
-                class="py-3 text-sm text-gray-400 hover:text-gray-500"
-              >
-                <span class="font-medium text-gray-900"> Categories </span>
-              </AccordionTrigger>
-              <AccordionContent class="pt-6">
-                <ul class="space-y-4">
-                  <li
-                    v-for="option in data?.categories"
-                    :key="option.id"
-                    class="flex items-center"
-                  >
-                    <Checkbox :id="option.id" />
-                    <Label
-                      :for="option.id"
-                      class="ml-3 cursor-pointer text-sm text-gray-600"
-                    >
-                      {{ option.title }}
-                    </Label>
-                  </li>
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="price">
-              <AccordionTrigger
-                class="py-3 text-sm text-gray-400 hover:text-gray-500"
-              >
-                <span class="font-medium text-gray-900"> Price </span>
-              </AccordionTrigger>
-              <AccordionContent class="pt-6">
-                <ul class="space-y-4">
-                  <li
-                    v-for="option in data?.categories"
-                    :key="option.id"
-                    class="flex items-center"
-                  >
-                    <Checkbox :id="option.id" />
-                    <Label
-                      :for="option.id"
-                      class="ml-3 cursor-pointer text-sm text-gray-600"
-                    >
-                      {{ option.title }}
-                    </Label>
-                  </li>
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <CourseFilters
+            v-model="filters"
+            :list="[categoryOptions, PRICE_OPTIONS]"
+          />
         </div>
         <div
           class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-3"
@@ -170,15 +76,29 @@
 import { Filter, Search } from 'lucide-vue-next';
 import type { Category } from '@/generated/prisma/client';
 
+const filters = reactive<{
+  categories: string[];
+  price: string[];
+  sort: string;
+}>({
+  categories: ['development'],
+  price: ['freee'],
+  sort: '',
+});
+
 const SORT_OPTIONS = [
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
 
-const PRICE_OPTIONS = [
-  { label: 'Free', value: 'free' },
-  { label: 'Paid', value: 'paid' },
-];
+const PRICE_OPTIONS = {
+  title: 'Price',
+  key: 'price',
+  options: [
+    { label: 'Free', value: 'free' },
+    { label: 'Paid', value: 'paid' },
+  ],
+};
 
 const { data } = await useAsyncData<{
   courses: FullCourse[];
@@ -206,4 +126,18 @@ const { data } = await useAsyncData<{
   },
   {},
 );
+
+const categoryOptions = computed<{
+  title: string;
+  key: string;
+  options: Option[];
+}>(() => ({
+  title: 'Categories',
+  key: 'categories',
+  options:
+    data.value?.categories.map((category) => ({
+      label: category.title,
+      value: category.id,
+    })) ?? [],
+}));
 </script>
