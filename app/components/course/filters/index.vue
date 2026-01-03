@@ -16,7 +16,7 @@ defineProps<{
   list: { title: string; key: string; options: Option[] }[];
 }>();
 
-const filters = defineModel<{ [key: string]: string | string[] }>();
+const filters = defineModel<{ [key: string]: Option | Option[] }>();
 
 function updateFilter(
   key: string,
@@ -25,16 +25,16 @@ function updateFilter(
 ) {
   console.log(filters.value?.[key], value);
   if (filters.value?.[key]) {
-    if (typeof filters.value?.[key] === 'string') {
-      filters.value[key] = value ? option.value : '';
-    } else {
+    if (Object.hasOwn(filters.value?.[key], 'length')) {
       if (!value) {
-        filters.value[key] = filters.value[key].filter(
-          (opt) => opt !== option.value,
+        filters.value[key] = (filters.value[key] as Option[]).filter(
+          (opt) => opt.value !== option.value,
         );
       } else {
-        filters.value[key] = [...filters.value[key], option.value];
+        filters.value[key] = [...(filters.value[key] as Option[]), option];
       }
+    } else {
+      filters.value[key] = value ? option : { label: '', value: '' };
     }
   }
 

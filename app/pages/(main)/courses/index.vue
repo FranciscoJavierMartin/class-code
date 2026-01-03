@@ -74,17 +74,17 @@
 </template>
 
 <script setup lang="ts">
-import { Filter, Search, X } from 'lucide-vue-next';
+import { Filter, Search } from 'lucide-vue-next';
 import type { Category } from '@/generated/prisma/client';
 
 const filters = reactive<{
-  categories: string[];
-  price: string[];
-  sort: string;
+  categories: Option[];
+  price: Option[];
+  sort: Option;
 }>({
   categories: [],
-  price: ['freee'],
-  sort: '',
+  price: [],
+  sort: { label: '', value: '' },
 });
 
 const SORT_OPTIONS = [
