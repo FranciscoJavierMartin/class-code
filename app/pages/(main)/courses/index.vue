@@ -46,7 +46,8 @@
       </div>
     </div>
     <div class="flex flex-wrap items-center gap-2">
-      <Button></Button>
+      <CourseFiltersApplied :list="filters.categories" />
+      <CourseFiltersApplied :list="filters.price" />
     </div>
     <section class="pt-6 pb-24">
       <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
@@ -73,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { Filter, Search } from 'lucide-vue-next';
+import { Filter, Search, X } from 'lucide-vue-next';
 import type { Category } from '@/generated/prisma/client';
 
 const filters = reactive<{
@@ -81,7 +82,7 @@ const filters = reactive<{
   price: string[];
   sort: string;
 }>({
-  categories: ['development'],
+  categories: [],
   price: ['freee'],
   sort: '',
 });

@@ -1,6 +1,6 @@
 <template>
   <Accordion :default-value="[list[0]?.key ?? '']" type="multiple">
-    <CourseFilter
+    <CourseFiltersList
       v-for="{ title, options, key } in list"
       :key
       :title
@@ -23,11 +23,12 @@ function updateFilter(
   option: Option,
   value: boolean | 'indeterminate',
 ) {
+  console.log(filters.value?.[key], value);
   if (filters.value?.[key]) {
     if (typeof filters.value?.[key] === 'string') {
       filters.value[key] = value ? option.value : '';
     } else {
-      if (value) {
+      if (!value) {
         filters.value[key] = filters.value[key].filter(
           (opt) => opt !== option.value,
         );
@@ -36,5 +37,7 @@ function updateFilter(
       }
     }
   }
+
+  console.log(filters.value);
 }
 </script>
