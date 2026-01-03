@@ -32,10 +32,52 @@ async function createCategories(): Promise<Category[]> {
   return prisma.category.createManyAndReturn({
     data: [
       {
+        title: 'Design',
+        description: 'Design courses',
+        thumbnail:
+          'https://res.cloudinary.com/dyshqk0em/image/upload/v1767207869/code-class/categories/design.jpg',
+      },
+      {
         title: 'Development',
-        description: 'Developments Courses',
+        description: 'Developments courses',
         thumbnail:
           'https://res.cloudinary.com/dyshqk0em/image/upload/v1767207870/code-class/categories/development.jpg',
+      },
+      {
+        title: 'Marketing',
+        description: 'Marketing courses',
+        thumbnail:
+          'https://res.cloudinary.com/dyshqk0em/image/upload/v1767207870/code-class/categories/marketing.jpg',
+      },
+      {
+        title: 'IT & Software',
+        description: 'IT & Software courses',
+        thumbnail:
+          'https://res.cloudinary.com/dyshqk0em/image/upload/v1767207870/code-class/categories/it_software.jpg',
+      },
+      {
+        title: 'Personal Development',
+        description: 'Personal development courses',
+        thumbnail:
+          'https://res.cloudinary.com/dyshqk0em/image/upload/v1767207870/code-class/categories/personal_development.jpg',
+      },
+      {
+        title: 'Business',
+        description: 'Business courses',
+        thumbnail:
+          'https://res.cloudinary.com/dyshqk0em/image/upload/v1767207872/code-class/categories/programming.jpg',
+      },
+      {
+        title: 'Photography',
+        description: 'Photography courses',
+        thumbnail:
+          'https://res.cloudinary.com/dyshqk0em/image/upload/v1767207871/code-class/categories/photography.jpg',
+      },
+      {
+        title: 'Music',
+        description: 'Music courses',
+        thumbnail:
+          'https://res.cloudinary.com/dyshqk0em/image/upload/v1767207870/code-class/categories/music.jpg',
       },
     ],
   });

@@ -7,7 +7,7 @@
         <SharedNavbar />
       </div>
     </div>
-    <main>
+    <main class="mt-20 flex flex-1 flex-col">
       <slot />
     </main>
     <SharedFooter />
