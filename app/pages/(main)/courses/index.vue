@@ -168,7 +168,7 @@
 
 <script setup lang="ts">
 import { Filter, Search } from 'lucide-vue-next';
-import type { Category, Course } from '@/generated/prisma/client';
+import type { Category } from '@/generated/prisma/client';
 
 const SORT_OPTIONS = [
   { label: 'Price: Low to High', value: 'price-asc' },
@@ -181,14 +181,14 @@ const PRICE_OPTIONS = [
 ];
 
 const { data } = await useAsyncData<{
-  courses: Course[];
+  courses: FullCourse[];
   categories: Category[];
 }>(
   'questions',
   async (_nuxtApp, { signal }) => {
     const [{ courses }, { categories }] = await Promise.all([
       $fetch<{
-        courses: Course[];
+        courses: FullCourse[];
       }>('/api/courses', {
         signal,
       }),
