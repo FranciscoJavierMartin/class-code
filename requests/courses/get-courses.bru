@@ -10,6 +10,11 @@ get {
   auth: inherit
 }
 
+vars:post-response {
+  courseId: res.body.courses[1].id
+}
+
 settings {
   encodeUrl: true
+  timeout: 0
 }

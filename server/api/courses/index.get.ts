@@ -1,5 +1,5 @@
-import { prisma } from '~~/lib/prisma';
 import type { EventHandlerRequest } from 'h3';
+import { prisma } from '~~/lib/prisma';
 
 export default defineEventHandler<
   EventHandlerRequest,
