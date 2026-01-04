@@ -298,7 +298,20 @@
 
     <section class="pb-8 md:pb-12 lg:pb-24">
       <div class="container">
-        <TitleSection>Testimonials</TitleSection>
+        <TitleSection class="mb-6">Testimonials</TitleSection>
+        <Carousel
+          :opts="{ align: 'start' }"
+          class="mx-auto w-full max-2xl:w-[90%]"
+        >
+          <CarouselContent>
+            <CarouselItem> 1 </CarouselItem>
+            <CarouselItem> 2 </CarouselItem>
+            <CarouselItem> 3 </CarouselItem>
+            <CarouselItem> 4 </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       </div>
     </section>
   </div>
