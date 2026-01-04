@@ -1,41 +1,32 @@
 <template>
-  <Accordion :default-value="[list[0]?.key ?? '']" type="multiple">
+  <Accordion :default-value="[keys[0] ?? '']" type="multiple">
     <CourseFiltersList
-      v-for="{ title, options, key } in list"
+      v-for="key in keys"
       :key
-      v-model="filters[key]"
-      :title
-      :options
-      :value="key"
+      v-model="filters[key]! as Option[]"
+      :title="filterMetadata[key]?.title ?? ''"
+      :value="filterMetadata[key]?.value ?? ''"
     />
   </Accordion>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  list: { title: string; key: string; options: Option[] }[];
-}>();
-
 const filters = defineModel<{ [key: string]: Option | Option[] }>({
   required: true,
 });
-// function updateFilter(
-//   key: string,
-//   option: Option,
-//   value: boolean | 'indeterminate',
-// ) {
-//   if (filters.value?.[key]) {
-//     if (Array.isArray(filters.value?.[key])) {
-//       if (!value) {
-//         filters.value[key] = (filters.value[key] as Option[]).filter(
-//           (opt) => opt.value !== option.value,
-//         );
-//       } else {
-//         filters.value[key] = [...(filters.value[key] as Option[]), option];
-//       }
-//     } else {
-//       filters.value[key] = value ? option : { label: '', value: '' };
-//     }
-//   }
-// }
+
+const keys = computed(() =>
+  Object.keys(filters.value).filter((key) => Array.isArray(filters.value[key])),
+);
+
+const filterMetadata: { [key: string]: { title: string; value: string } } = {
+  categories: {
+    title: 'Categories',
+    value: 'categories',
+  },
+  price: {
+    title: 'Price',
+    value: 'price',
+  },
+};
 </script>

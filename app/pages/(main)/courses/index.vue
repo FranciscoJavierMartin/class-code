@@ -35,10 +35,7 @@
             <SheetContent side="left">
               <SheetHeader>
                 <SheetTitle>Filter courses</SheetTitle>
-                <!-- <CourseFilters
-                  v-model="filters"
-                  :list="[categoryOptions, PRICE_OPTIONS]"
-                /> -->
+                <CourseFilters v-model="filters" />
               </SheetHeader>
             </SheetContent>
           </Sheet>
@@ -46,26 +43,22 @@
       </div>
     </div>
     <div class="flex flex-wrap items-center gap-2">
-      <h1>{{ filters.categories }}</h1>
-      <!-- <CourseFiltersApplied
-        :list="filters.categories"
+      <CourseFiltersApplied
+        :active-filters="activeFilters.categories"
         @remove-filter="removeFilter('categories', $event)"
       />
       <CourseFiltersApplied
-        :list="filters.price"
+        :active-filters="activeFilters.price"
         @remove-filter="removeFilter('price', $event)"
-      /> -->
+      />
     </div>
     <section class="pt-6 pb-24">
       <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
         <div class="hidden lg:block">
-          <CourseFilters
-            v-model="filters"
-            :list="[categoryOptions, PRICE_OPTIONS]"
-          />
+          <CourseFilters v-model="filters" />
         </div>
         <div
-          class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-3"
+          class="grid h-full grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-3"
         >
           <CardCourse
             v-for="course in data?.courses"
@@ -99,20 +92,11 @@ const SORT_OPTIONS = [
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
 
-const PRICE_OPTIONS = {
-  title: 'Price',
-  key: 'price',
-  options: [
-    { label: 'Free', value: 'free' },
-    { label: 'Paid', value: 'paid' },
-  ],
-};
-
 const { data } = await useAsyncData<{
   courses: FullCourse[];
   categories: Category[];
 }>(
-  'questions',
+  'courses',
   async (_nuxtApp, { signal }) => {
     const [{ courses }, { categories }] = await Promise.all([
       $fetch<{
@@ -135,17 +119,37 @@ const { data } = await useAsyncData<{
   {},
 );
 
-const categoryOptions = computed<{
-  title: string;
-  key: string;
-  options: Option[];
-}>(() => ({
-  title: 'Categories',
-  key: 'categories',
-  options:
-    data.value?.categories.map((category) => ({
-      label: category.title,
-      value: category.id,
-    })) ?? [],
-}));
+watch(
+  data,
+  (newValue) => {
+    filters.categories =
+      newValue?.categories.map((cat) => ({
+        label: cat.title,
+        value: cat.id,
+        selected: false,
+      })) ?? [];
+    filters.price = [
+      { label: 'Free', value: 'free', selected: false },
+      { label: 'Paid', value: 'paid', selected: false },
+    ];
+  },
+  { immediate: true, once: true },
+);
+
+const activeFilters = computed(() => {
+  return {
+    categories:
+      filters.categories?.filter((category) => category.selected) ?? [],
+    price: filters.price?.filter((price) => price.selected) ?? [],
+  };
+});
+
+function removeFilter(key: string, id: string) {
+  if (filters[key] && Array.isArray(filters[key])) {
+    filters[key] =
+      filters[key]?.map((item) =>
+        item.value === id ? { ...item, selected: false } : item,
+      ) ?? [];
+  }
+}
 </script>
