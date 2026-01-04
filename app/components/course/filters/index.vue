@@ -25,7 +25,7 @@ function updateFilter(
 ) {
   console.log(filters.value?.[key], value);
   if (filters.value?.[key]) {
-    if (Object.hasOwn(filters.value?.[key], 'length')) {
+    if (Array.isArray(filters.value?.[key])) {
       if (!value) {
         filters.value[key] = (filters.value[key] as Option[]).filter(
           (opt) => opt.value !== option.value,

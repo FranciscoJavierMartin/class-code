@@ -46,8 +46,14 @@
       </div>
     </div>
     <div class="flex flex-wrap items-center gap-2">
-      <CourseFiltersApplied :list="filters.categories" />
-      <CourseFiltersApplied :list="filters.price" />
+      <CourseFiltersApplied
+        :list="filters.categories"
+        @remove-filter="removeFilter('categories', $event)"
+      />
+      <CourseFiltersApplied
+        :list="filters.price"
+        @remove-filter="removeFilter('price', $event)"
+      />
     </div>
     <section class="pt-6 pb-24">
       <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
@@ -141,4 +147,12 @@ const categoryOptions = computed<{
       value: category.id,
     })) ?? [],
 }));
+
+function removeFilter(key: string, option: Option): void {
+  if (filters[key]) {
+    if (Array.isArray(filters[key])) {
+      filters[key] = filters[key].filter((opt) => opt.value !== option.value);
+    }
+  }
+}
 </script>

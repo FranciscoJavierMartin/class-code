@@ -4,6 +4,7 @@
     :key="item.value"
     variant="ghost"
     class="bg-muted h-7 gap-1 rounded-full text-xs text-sky-700"
+    @click="$emit('removeFilter', item)"
   >
     {{ item.label }}
     <X class="w-3" />
@@ -14,4 +15,8 @@
 import { X } from 'lucide-vue-next';
 
 defineProps<{ list: Option[] }>();
+
+defineEmits<{
+  (e: 'removeFilter', option: Option): void;
+}>();
 </script>
