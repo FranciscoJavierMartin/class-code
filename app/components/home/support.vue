@@ -7,15 +7,15 @@
         <p
           class="font-poppins mt-5 text-3xl leading-tight font-bold text-gray-900 sm:text-5xl"
         >
-          <span className="relative inline-flex sm:inline">
+          <span class="relative inline-flex sm:inline">
             <span
-              className="bg-linar-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-lg filter opacity-30 w-full h-full absolute inset-0"
+              class="bg-linar-to-r absolute inset-0 h-full w-full from-[#44BCFF] via-[#FF44EC] to-[#FF675E] opacity-30 blur-lg filter"
             >
             </span>
-            <span className="relative">Let us know for support</span>
+            <span class="relative">Let us know for support</span>
           </span>
         </p>
-        <p className="text-foreground leading-relaxed mb-8 mt-8">
+        <p class="text-foreground mt-8 mb-8 leading-relaxed">
           CodeClass was founded to empower novice and professional software
           engineers to enhance their skills, increase their earning potential,
           and transform their lives for the better.

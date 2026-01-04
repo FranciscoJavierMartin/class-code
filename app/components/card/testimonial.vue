@@ -7,7 +7,7 @@
           :src="avatar"
           width="56"
           height="56"
-          className="size-14 rounded-full object-cover"
+          class="size-14 rounded-full object-cover"
         />
         <div>
           <p class="mt-0.5 text-lg font-medium text-gray-900">{{ name }}</p>

@@ -3,7 +3,7 @@
     <div class="mb-8 md:flex md:gap-x-5">
       <div class="mb-5 h-77.5 w-67.5 max-w-full flex-none rounded md:mb-0">
         <img
-          className="size-full object-cover rounded"
+          class="size-full rounded object-cover"
           src="https://i.pravatar.cc"
           alt="John"
         />

@@ -8,33 +8,35 @@
       />
     </div>
 
-    <section class="py-8 md:py-12 lg:py-24">
+    <section v-if="data" class="py-8 md:py-12 lg:py-24">
       <div class="container">
         <span
           class="inline-block rounded-full bg-green-500 px-4 py-0.5 text-xs font-medium text-white"
         >
-          Development
+          {{ data.course.category.title }}
         </span>
         <h3
           class="mt-3 text-2xl font-bold md:text-3xl lg:text-4xl 2xl:text-5xl"
         >
-          My super text
+          {{ data.course.title }}
         </h3>
-        <p class="mt-3 text-sm text-gray-600">Master Javascript</p>
+        <p class="mt-3 text-sm text-gray-600">{{ data.course.subtitle }}</p>
         <div
           class="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6 md:gap-20"
         >
           <div class="flex items-center gap-2">
-            <img
-              className="size-10 rounded-full"
-              src="https://i.pravatar.cc"
-              alt="John"
+            <NuxtImg
+              class="size-10 rounded-full"
+              width="40px"
+              height="40px"
+              :src="data.course.instructor.image"
+              :alt="data.course.instructor.name"
             />
-            <p class="font-bold">John Doe</p>
+            <p class="font-bold">{{ data.course.instructor.name }}</p>
           </div>
           <div class="flex items-center gap-2 text-sm">
             <span class="font-semibold">Last updated:</span>
-            <span>Jan 06, 2026</span>
+            <span>{{ formatDate(data.course.updatedAt) }}</span>
           </div>
         </div>
         <div class="my-6">
@@ -67,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Course } from '~/generated/prisma/client';
+import type { Course } from '@/generated/prisma/client';
 
 const route = useRoute();
 const id = computed<string>(() => route.params.id as string);
