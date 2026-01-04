@@ -11,7 +11,7 @@
         />
         <div>
           <p class="mt-0.5 text-lg font-medium text-gray-900">{{ name }}</p>
-          <div class="flex justify-center gap-0.5 text-yellow-600">
+          <div class="flex justify-start gap-0.5 text-yellow-600">
             <Star
               v-for="(_, index) in Array(integer)"
               :key="index"

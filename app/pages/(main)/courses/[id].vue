@@ -58,7 +58,10 @@
       </div>
     </section>
 
-    <CourseTestimonials />
+    <CourseTestimonials
+      v-if="data?.course.testimonials"
+      :testimonials="data.course.testimonials"
+    />
     <CourseRelated />
   </div>
 </template>

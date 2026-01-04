@@ -8,18 +8,15 @@
       >
         <CarouselContent>
           <CarouselItem
-            v-for="(_, index) in new Array(5).fill('')"
-            :key="index"
+            v-for="testimonial in testimonials"
+            :key="testimonial.id"
             class="md:basis-1/2 lg:basis-1/3"
           >
             <CardTestimonial
-              name="John Doe"
-              avatar="https://i.pravatar.cc/56"
-              :rating="4.5"
-              text="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa sit
-        rerum incidunt, a consequuntur recusandae ab saepe illo est quia
-        obcaecati neque quibusdam eius accusamus error officiis atque voluptates
-        magnam!"
+              :name="testimonial.student.name"
+              :avatar="testimonial.student.image"
+              :rating="testimonial.rating"
+              :text="testimonial.content"
             />
           </CarouselItem>
         </CarouselContent>
@@ -29,3 +26,9 @@
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+import type { Testimonial } from '@/generated/prisma/client';
+
+defineProps<{ testimonials: Testimonial[] }>();
+</script>

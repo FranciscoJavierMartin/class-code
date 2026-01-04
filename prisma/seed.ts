@@ -94,6 +94,7 @@ async function createUsers(): Promise<any> {
       name: 'John Doe',
       designation: 'Senior Software Engineer, Dell Inc.',
       bio: 'Experienced educator passionate about fostering student learning and development.',
+      image: 'https://i.pravatar.cc',
       role: Role.INSTRUCTOR,
     },
   });
@@ -107,6 +108,7 @@ async function createUsers(): Promise<any> {
       name: 'Alice Cooper',
       designation: 'Junior Develeoper, Microsoft',
       bio: 'I love coding',
+      image: 'https://i.pravatar.cc',
       role: Role.STUDENT,
     },
   });
@@ -120,6 +122,7 @@ async function createUsers(): Promise<any> {
       name: 'Bob Smith',
       designation: 'Junior Develeoper, Acme',
       bio: 'Passionate about finance and investing.',
+      image: 'https://i.pravatar.cc',
       role: Role.STUDENT,
     },
   });
@@ -133,6 +136,7 @@ async function createUsers(): Promise<any> {
       name: 'Carol Sanders',
       designation: 'Junior Develeoper, OpenText',
       bio: 'I love programming, I eat JavaScript',
+      image: 'https://i.pravatar.cc',
       role: Role.STUDENT,
     },
   });
