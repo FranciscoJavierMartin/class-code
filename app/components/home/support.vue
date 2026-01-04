@@ -1,5 +1,5 @@
 <template>
-  <div class="text-foreground border-b border-gray-700 px-4 py-5 md:px-16">
+  <div class="text-foreground px-4 py-5 md:px-16">
     <div
       class="mx-auto flex max-w-7xl flex-col items-center space-y-12 md:flex-row md:space-y-0 md:space-x-8"
     >
