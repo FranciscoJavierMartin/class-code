@@ -3,7 +3,7 @@
     <CourseFiltersList
       v-for="key in keys"
       :key
-      v-model="filters[key]! as Option[]"
+      v-model="filters[key]!"
       :title="filterMetadata[key]?.title ?? ''"
       :value="filterMetadata[key]?.value ?? ''"
     />
@@ -11,13 +11,11 @@
 </template>
 
 <script setup lang="ts">
-const filters = defineModel<{ [key: string]: Option | Option[] }>({
+const filters = defineModel<{ [key: string]: Option[] }>({
   required: true,
 });
 
-const keys = computed(() =>
-  Object.keys(filters.value).filter((key) => Array.isArray(filters.value[key])),
-);
+const keys = computed(() => Object.keys(filters.value));
 
 const filterMetadata: { [key: string]: { title: string; value: string } } = {
   categories: {

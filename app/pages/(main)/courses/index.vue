@@ -10,7 +10,7 @@
         </InputGroupAddon>
       </InputGroup>
       <div class="flex items-center justify-end gap-2 max-lg:w-full">
-        <Select>
+        <Select v-model="sort">
           <SelectTrigger class="w-full overflow-hidden lg:w-45">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
@@ -78,14 +78,12 @@ import { Filter, Search } from 'lucide-vue-next';
 import type { Category } from '@/generated/prisma/client';
 
 const filters = reactive<{
-  categories: Option[];
-  price: Option[];
-  sort: Option;
+  [key: string]: Option[];
 }>({
   categories: [],
   price: [],
-  sort: { label: '', value: '' },
 });
+const sort = ref<string>('');
 
 const SORT_OPTIONS = [
   { label: 'Price: Low to High', value: 'price-asc' },
@@ -145,7 +143,7 @@ const activeFilters = computed(() => {
 });
 
 function removeFilter(key: string, id: string) {
-  if (filters[key] && Array.isArray(filters[key])) {
+  if (filters[key]) {
     filters[key] =
       filters[key]?.map((item) =>
         item.value === id ? { ...item, selected: false } : item,
