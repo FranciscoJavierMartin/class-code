@@ -1,6 +1,8 @@
 <template>
   <AccordionItem :value>
-    <AccordionTrigger class="py-3 text-sm text-gray-400 hover:text-gray-500">
+    <AccordionTrigger
+      class="py-3 text-sm text-gray-400 hover:text-gray-500 hover:no-underline"
+    >
       <span class="font-medium text-gray-900"> {{ title }} </span>
     </AccordionTrigger>
     <AccordionContent class="pt-6">
