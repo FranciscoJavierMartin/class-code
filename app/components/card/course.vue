@@ -1,7 +1,7 @@
 <template>
   <NuxtLink :to="{ name: ROUTES.course, params: { id: course.id } }">
     <div
-      class="group h-full overflow-hidden rounded-lg border p-3 transition hover:shadow-sm"
+      class="group overflow-hidden rounded-lg border p-3 transition hover:shadow-sm"
     >
       <div class="relative aspect-video w-full overflow-hidden rounded-md">
         <NuxtImg
