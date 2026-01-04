@@ -38,6 +38,7 @@
   --color-card-foreground: var(--card-foreground);
 
   --font-poppins: 'Poppins';
+  --font-inter: 'Inter';
 }
 
 :root {

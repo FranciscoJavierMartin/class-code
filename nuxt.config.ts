@@ -34,7 +34,16 @@ export default defineNuxtConfig({
     classSuffix: '',
   },
 
-  fonts: {},
+  fonts: {
+    families: [
+      {
+        name: 'Inter',
+        provider: 'local',
+        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+        src: '@/assets/fonts/InterVF.ttf',
+      },
+    ],
+  },
 
   nitro: {
     preset: 'bun',

@@ -46,7 +46,7 @@
 
     <section class="container space-y-6 py-8 md:py-12 lg:py-24">
       <div class="flex items-center justify-between">
-        <HomeSectionTitle>Categories</HomeSectionTitle>
+        <TitleSection>Categories</TitleSection>
         <NuxtLink
           class="flex items-center gap-1 text-sm font-medium hover:opacity-80"
         >
@@ -66,7 +66,7 @@
 
     <section class="container space-y-6 py-8 md:py-12 lg:py-24">
       <div class="flex items-center justify-between">
-        <HomeSectionTitle>Courses</HomeSectionTitle>
+        <TitleSection>Courses</TitleSection>
         <NuxtLink
           :to="{ name: ROUTES.courses }"
           class="flex items-center gap-1 text-sm font-medium hover:opacity-80"
@@ -96,17 +96,17 @@ import { ArrowRightIcon } from 'lucide-vue-next';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 import { ROUTES } from '@/utils/constants/routes';
-import type { Category, Course } from '~/generated/prisma/client';
+import type { Category } from '@/generated/prisma/client';
 
 const { data } = await useAsyncData<{
-  courses: Course[];
+  courses: FullCourse[];
   categories: Category[];
 }>(
-  'questions',
+  'courses',
   async (_nuxtApp, { signal }) => {
     const [{ courses }, { categories }] = await Promise.all([
       $fetch<{
-        courses: Course[];
+        courses: FullCourse[];
       }>('/api/courses', {
         signal,
       }),
