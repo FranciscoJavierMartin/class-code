@@ -47,7 +47,10 @@
               <TabsTrigger value="instructor">Instructor</TabsTrigger>
             </TabsList>
             <TabsContent value="overview">
-              <CourseTabsOverview />
+              <CourseTabsOverview
+                :description="data.course.description"
+                :learning="data.course.learning"
+              />
             </TabsContent>
             <TabsContent value="curriculum">
               <CourseTabsCurriculum />
