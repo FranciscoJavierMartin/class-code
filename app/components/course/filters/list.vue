@@ -6,12 +6,13 @@
     <AccordionContent class="pt-6">
       <ul class="space-y-4">
         <li
-          v-for="option in options"
+          v-for="option in options as Option[]"
           :key="option.value"
           class="flex items-center"
         >
           <Checkbox
             :id="option.value"
+            v-model="options1"
             @update:model-value="$emit('update', { option, value: $event })"
           />
           <Label
@@ -33,10 +34,14 @@ defineProps<{
   options: Option[];
 }>();
 
+const options1 = defineModel<Option | Option[]>();
+
 defineEmits<{
   (
     e: 'update',
     value: { option: Option; value: boolean | 'indeterminate' },
   ): void;
 }>();
+
+// const isList = computed<boolean>(() => Array.isArray(options.value));
 </script>
