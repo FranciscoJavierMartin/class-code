@@ -4,6 +4,7 @@ import type {
   Module,
   Testimonial,
   User,
+  Lesson,
 } from '@/generated/prisma/client';
 
 export type FullCourse = Course & {
@@ -11,4 +12,8 @@ export type FullCourse = Course & {
   testimonials: Testimonial[];
   category: Category;
   instructor: User;
+};
+
+export type ModuleWithLessons = Module & {
+  lessons: Lesson[];
 };

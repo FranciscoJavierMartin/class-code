@@ -29,7 +29,7 @@
               class="size-10 rounded-full"
               width="40px"
               height="40px"
-              :src="data.course.instructor.image"
+              :src="data.course.instructor.image ?? ''"
               :alt="data.course.instructor.name"
             />
             <p class="font-bold">{{ data.course.instructor.name }}</p>
@@ -53,7 +53,11 @@
               />
             </TabsContent>
             <TabsContent value="curriculum">
-              <CourseTabsCurriculum />
+              <CourseTabsCurriculum
+                :modules="data.modules"
+                :duration="data.durationCourse"
+                :duration-modules="data.durationModules"
+              />
             </TabsContent>
             <TabsContent value="instructor">
               <CourseTabsInstructor />
@@ -72,25 +76,27 @@
 </template>
 
 <script setup lang="ts">
-import type { Course } from '@/generated/prisma/client';
-
 const route = useRoute();
 const id = computed<string>(() => route.params.id as string);
 
 const { data } = await useAsyncData<{
-  course: Course;
+  course: FullCourse;
+  modules: ModuleWithLessons[];
+  durationCourse: number;
+  durationModules: Record<string, number>;
 }>(
   `course-${id.value}`,
   async (_nuxtApp, { signal }) => {
-    const { course } = await $fetch<{
-      course: Course;
+    const response = await $fetch<{
+      course: FullCourse;
+      modules: ModuleWithLessons[];
+      durationCourse: number;
+      durationModules: Record<string, number>;
     }>(`/api/courses/${id.value}`, {
       signal,
     });
 
-    return {
-      course,
-    };
+    return response;
   },
   {
     watch: [id],
