@@ -1,0 +1,20 @@
+meta {
+  name: Get instructor details
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/instructor/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: {{instructorId}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

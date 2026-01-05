@@ -6,50 +6,79 @@
       >
         <NuxtImg
           class="size-50 rounded object-cover"
-          :src="image ?? ''"
-          :alt="name"
+          :src="data?.instructor.image ?? ''"
+          :alt="data?.instructor.name"
           height="200px"
           width="200px"
         />
       </div>
       <div class="flex-1">
         <div class="max-w-75">
-          <h4 class="text-[34px] leading-12.75 font-bold">{{ name }}</h4>
-          <div class="mb-6 font-medium text-gray-600">{{ designation }}</div>
+          <h4 class="text-[34px] leading-12.75 font-bold">
+            {{ data?.instructor.name }}
+          </h4>
+          <div class="mb-6 font-medium text-gray-600">
+            {{ data?.instructor.designation }}
+          </div>
           <ul class="space-y-4">
             <li class="flex space-x-3">
               <Presentation class="text-gray-600" />
-              <div>10+ courses</div>
+              <div>{{ courses }}</div>
             </li>
             <li class="flex space-x-3">
-              <Presentation class="text-gray-600" />
-              <div>10+ courses</div>
+              <UsersRound class="text-gray-600" />
+              <div>{{ enrollments }}</div>
             </li>
             <li class="flex space-x-3">
-              <Presentation class="text-gray-600" />
-              <div>10+ courses</div>
+              <MessageSquare class="text-gray-600" />
+              <div>{{ reviews }}</div>
             </li>
             <li class="flex space-x-3">
-              <Presentation class="text-gray-600" />
-              <div>10+ courses</div>
+              <Star class="fill-yellow-600 text-yellow-600" />
+              <div>{{ data?.rating }}</div>
             </li>
           </ul>
         </div>
       </div>
     </div>
     <p class="text-gray-600">
-      {{ bio }}
+      {{ data?.instructor.bio }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Presentation } from 'lucide-vue-next';
+import { MessageSquare, Presentation, Star, UsersRound } from 'lucide-vue-next';
 
-defineProps<{
-  name: string;
-  designation?: string | null;
-  bio?: string | null;
-  image?: string | null;
+const { id } = defineProps<{
+  id: string;
 }>();
+
+const { data } = await useFetch<{
+  instructor: {
+    name: string;
+    designation: string;
+    bio?: string | null;
+    image?: string | null;
+  };
+  courses: number;
+  enrollments: number;
+  reviews: number;
+  rating: number;
+}>(`/api/instructor/${id}`, { watch: [() => id] });
+
+const courses = computed(() => {
+  const value = data.value?.courses ?? 0;
+  return value === 1 ? `${value} course` : `${value} courses`;
+});
+
+const enrollments = computed(() => {
+  const value = data.value?.enrollments ?? 0;
+  return value === 1 ? `${value} enrollment` : `${value} enrollments`;
+});
+
+const reviews = computed(() => {
+  const value = data.value?.reviews ?? 0;
+  return value === 1 ? `${value} reviews` : `${value} reviews`;
+});
 </script>

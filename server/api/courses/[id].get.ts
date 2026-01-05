@@ -1,9 +1,9 @@
 import type { EventHandlerRequest } from 'h3';
 import { prisma } from '~~/lib/prisma';
-import { courseIdSchema } from '~~/shared/utils/validations/schemas/course';
+import { idSchema } from '~~/shared/utils/validations/schemas/general';
 
 export default defineEventHandler<EventHandlerRequest>(async (event) => {
-  const { id } = await validateRouterParams(event, courseIdSchema);
+  const { id } = await validateRouterParams(event, idSchema);
   const course = await prisma.course.findUnique({
     where: {
       id,

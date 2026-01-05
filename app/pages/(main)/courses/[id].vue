@@ -58,12 +58,7 @@
               />
             </TabsContent>
             <TabsContent value="instructor">
-              <CourseTabsInstructor
-                :bio="data.course.instructor.bio"
-                :designation="data.course.instructor.designation"
-                :image="data.course.instructor.image"
-                :name="data.course.instructor.name"
-              />
+              <CourseTabsInstructor :id="data.course.instructorId" />
             </TabsContent>
           </Tabs>
         </div>
