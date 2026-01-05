@@ -1,17 +1,17 @@
 meta {
-  name: Get courses
+  name: Get instructor details
   type: http
   seq: 1
 }
 
 get {
-  url: {{baseUrl}}/courses
+  url: {{baseUrl}}/instructor/:id
   body: none
   auth: inherit
 }
 
-vars:post-response {
-  courseId: res.body.courses[1].id
+params:path {
+  id: {{instructorId}}
 }
 
 settings {
