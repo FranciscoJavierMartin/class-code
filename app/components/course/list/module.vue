@@ -22,12 +22,13 @@
             <Radio class="size-4" /> 1 Live class
           </span>
         </div>
-        <CourseListLesson
-          v-for="lesson in module.lessons"
-          :key="lesson.id"
-          :lesson="lesson.id"
-          class="space-y-3"
-        />
+        <div class="flex flex-col gap-y-3">
+          <CourseListLesson
+            v-for="lesson in module.lessons"
+            :key="lesson.id"
+            :lesson
+          />
+        </div>
       </AccordionContent>
     </AccordionItem>
   </div>

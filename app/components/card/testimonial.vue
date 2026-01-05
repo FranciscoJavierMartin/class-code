@@ -34,10 +34,10 @@ import { Star, StarHalf } from 'lucide-vue-next';
 const { rating } = defineProps<{
   avatar: string;
   name: string;
-  rating: number;
+  rating: number | string;
   text: string;
 }>();
 
-const integer = computed<number>(() => Math.floor(rating));
-const showHalfStar = computed<boolean>(() => rating % 1 >= 0.5);
+const integer = computed<number>(() => Math.floor(+rating));
+const showHalfStar = computed<boolean>(() => +rating % 1 >= 0.5);
 </script>

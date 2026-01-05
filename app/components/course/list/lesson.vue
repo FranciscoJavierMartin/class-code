@@ -9,19 +9,7 @@
     >
       <div class="flex items-center gap-x-2">
         <Tv :size="16" class="text-slate-500" />
-        What is React?
-      </div>
-    </button>
-    <button
-      :class="
-        cn(
-          'flex w-full items-center gap-x-2 text-sm font-medium text-slate-500 transition-all hover:text-slate-600',
-        )
-      "
-    >
-      <div class="flex items-center gap-x-2">
-        <Tv :size="16" class="text-slate-500" />
-        What is React?
+        {{ lesson.title }}
       </div>
     </button>
   </div>
@@ -31,6 +19,7 @@
 import type { HTMLAttributes } from 'vue';
 import { Tv } from 'lucide-vue-next';
 import { cn } from '@/lib/utils';
+import type { Lesson } from '@/generated/prisma/client';
 
-defineProps<{ class?: HTMLAttributes['class'] }>();
+defineProps<{ class?: HTMLAttributes['class']; lesson: Lesson }>();
 </script>
