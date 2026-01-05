@@ -10,11 +10,9 @@
 
     <section v-if="data" class="py-8 md:py-12 lg:py-24">
       <div class="container">
-        <span
-          class="inline-block rounded-full bg-green-500 px-4 py-0.5 text-xs font-medium text-white"
-        >
+        <Badge variant="success">
           {{ data.course.category.title }}
-        </span>
+        </Badge>
         <h3
           class="mt-3 text-2xl font-bold md:text-3xl lg:text-4xl 2xl:text-5xl"
         >

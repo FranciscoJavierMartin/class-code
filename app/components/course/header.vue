@@ -51,7 +51,6 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
-import courseImg from '@/assets/images/courses/course_1.png';
 
 defineProps<{
   title: string;
