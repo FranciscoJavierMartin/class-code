@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="my-6">
-          <Tabs default-value="instructor" class="w-full">
+          <Tabs default-value="overview" class="w-full">
             <TabsList class="my-6 grid w-full max-w-3xl grid-cols-3">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="curriculum">Curriculum</TabsTrigger>
@@ -58,7 +58,7 @@
               />
             </TabsContent>
             <TabsContent value="instructor">
-              <CourseTabsInstructor :id="data.course.instructorId" />
+              <LazyCourseTabsInstructor :id="data.course.instructorId" />
             </TabsContent>
           </Tabs>
         </div>
